@@ -1,38 +1,25 @@
 {
-  "name": "amodro-lifecycle",
-  "version": "0.1.0",
-  "description": "JS module loader lifecycle engine. Used to drive specific module system loaders",
-  "main": "lifecycle-node.js",
+  "name": "amodro-base",
+  "version": "0.0.0",
+  "description": "Baseline JS module loader with build variations for different environments",
   "scripts": {
-    "test": "node build/node.js && mocha test",
-    "build": "node build/node.js"
+    "test": "node build/build.js && find ./test -name '*test.js' | xargs node_modules/.bin/mocha -R spec",
+    "build": "node build/build.js"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/amodrojs/amodro-lifecycle.git"
+    "url": "https://github.com/amodrojs/amodro-base.git"
   },
   "keywords": [
     "module",
     "loader"
   ],
   "author": "James Burke <jrburke@gmail.com> (http://github.com/jrburke)",
-  "licenses": [
-    {
-      "type": "BSD",
-      "url": "https://github.com/amodrodjs/amodro-lifecycle/blob/master/LICENSE"
-    },
-    {
-      "type": "MIT",
-      "url": "https://github.com/amodrodjs/amodro-lifecycle/blob/master/LICENSE"
-    }
-  ],
+  "license": "BSD-3-Clause AND MIT",
   "bugs": {
-    "url": "https://github.com/amodrojs/amodro-lifecycle/issues"
+    "url": "https://github.com/amodrojs/amodro-base/issues"
   },
-  "homepage": "https://github.com/amodrojs/amodro-lifecycle",
-  "volo": {
-    "url": "https://raw.githubusercontent.com/amodrojs/amodro-lifecycle/{version}/lifecycle"
-  },
+  "homepage": "https://github.com/amodrojs/amodro-base",
   "devDependencies": {
     "esprima": "^2.2.0",
     "mocha": "^2.2.1"

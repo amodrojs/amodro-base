@@ -8,6 +8,8 @@ Wraps amodro-lifecycle with a loader implementation. The build from this repo ca
 
 For a browser based implementation, the plan is to expand the build.js to swap in alternative versions of some of the files, like a different `parts/fetch.js`.
 
-Not well documented yet: the goal right now is to port of as many requirejs/alameda tests that make sense to prove out the operation of Lifecycle.
+Not well documented yet: the goal right now is to port of as many requirejs/alameda tests that make sense to prove out the operation of amodro-lifecycle.
 
-`test-amd.sh` can be run to do the builds and then run the local tests. Check out [amodro-requirejs-tests](https://github.com/amodrojs/amodro-requirejs-tests) as as sibling to this directory to use those modified tests with the loaders generated here.
+`test.sh` can be run to do the builds and then run the local tests.
+
+If wanting to check requirejs test compatibility, check out [amodro-requirejs-tests](https://github.com/amodrojs/amodro-requirejs-tests) as as sibling to this directory to use those modified tests with the loaders generated here.

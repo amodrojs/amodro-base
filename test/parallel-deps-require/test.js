@@ -1,4 +1,4 @@
-require('../../tester')(module.id, function (loader, define, assert, done) {
+require('../tester')(module.id, function (loader, define, assert, done) {
   return loader(['bar', 'baz'], function (bar, baz) {
 
     assert.equal('bar', bar.name);

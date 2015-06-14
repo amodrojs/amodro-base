@@ -6,19 +6,12 @@ var assert = require('assert'),
     amodro = require('../' +
              (logDebug ? 'amodro-test-node-debug' : 'amodro-test-node')),
     createLoader = amodro.createLoader,
-    define = amodro.define,
-    sourceDir = path.join(__dirname, 'source');
+    define = amodro.define;
 
 module.exports = function(testPath, fn) {
-  var testSuffix,
-      parts = testPath.split('/'),
-      sourceIndex = parts.lastIndexOf('source');
+  var testSuffix;
 
-  if (sourceIndex === -1) {
-    testSuffix = path.basename(testPath);
-  } else {
-    testSuffix = parts.splice(sourceIndex + 1).join('/');
-  }
+testSuffix = testPath.replace(__dirname, '').substring(1);
 
   //describe(testSuffix, function() {
     it(testSuffix, function(done) {
@@ -26,7 +19,7 @@ module.exports = function(testPath, fn) {
 
       try {
         result = fn(createLoader({
-          baseUrl: path.join(sourceDir, path.dirname(testSuffix))
+          baseUrl: path.join(__dirname, path.dirname(testSuffix))
         }), define, assert, done);
       } catch (e) {
         return done(e);

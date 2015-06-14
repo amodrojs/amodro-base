@@ -1,4 +1,4 @@
-require('../../tester')(module.id, function (loader, define, assert, done) {
+require('../tester')(module.id, function (loader, define, assert, done) {
 
   loader.config({
     after: {

@@ -1,4 +1,4 @@
-require('../../tester')(module.id, function (loader, define, assert, done) {
+require('../tester')(module.id, function (loader, define, assert, done) {
   return loader(['earth', 'prime/earth'], function(earth, primeEarth) {
     assert.equal('a', earth.getA().name);
     assert.equal('c', earth.getC().name);
