@@ -4,7 +4,7 @@ var assert = require('assert'),
     path = require('path'),
     logDebug = process.env.LOGDEBUG === '1',
     amodro = require('../' +
-             (logDebug ? 'amodro-test-node-debug' : 'amodro-test-node')),
+             (logDebug ? 'amodro-node-debug' : 'amodro-node')),
     createLoader = amodro.createLoader,
     define = amodro.define;
 

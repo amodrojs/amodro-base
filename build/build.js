@@ -32,11 +32,11 @@ args.forEach(function(arg) {
 // Permutations of the builds
 var permutations = {
   // The default one used for running node tests by default.
-  'amodro-test-node': {
+  'amodro-node': {
   },
 
   // The default one used for running node tests by default, with debug logging.
-  'amodro-test-node-debug': {
+  'amodro-node-debug': {
     keepLog: true
   },
 
