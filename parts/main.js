@@ -2,9 +2,9 @@
 /*jshint strict: false */
 var amodro, define;
 (function(global) {
-  //INSERT ../../../support/prim.js
-  //INSERT prim-to-promise.js
-  //INSERT ../../../lifecycle.js
+  //INSERT support/prim.js
+  //INSERT support/prim-to-promise.js
+  //INSERT lifecycle.js
 
   var slice = Array.prototype.slice,
       commentRegExp = /(\/\*([\s\S]*?)\*\/|([^:]|^)\/\/(.*)$)/mg,
@@ -105,13 +105,13 @@ var amodro, define;
   }
 
   // Basic ID normalization support, and alias support.
-  //INSERT ../../../support/normalize-alias.js
-  //INSERT ../../../support/normalize-dot.js
+  //INSERT normalize/normalize-alias.js
+  //INSERT normalize/normalize-dot.js
 
   // Optional parts that can further modify the lifecycle prototypes.
   var protoModifiers = [];
-  //INSERT ../../../support/plugins.js
-  //INSERT ../../../support/shim.js
+  //INSERT feature/plugins.js
+  //INSERT feature/shim.js
 
   // Lifecycle overrides and additional methods
   var protoMethods = {

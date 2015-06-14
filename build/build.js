@@ -2,10 +2,10 @@
 var fs = require('fs'),
     path = require('path'),
     loadRegExp = /\/\/INSERT ([\w\/\.-]+)/g,
-    dir = path.join(__dirname, 'parts'),
+    dir = path.join(__dirname, '..', 'parts'),
     mainFilePath = path.join(dir, 'main.js'),
     mainContents = fs.readFileSync(mainFilePath, 'utf8'),
-    transformNoLog = require('../../build/transform-nolog'),
+    transformNoLog = require('./transform-nolog'),
     args = process.argv.slice(2);
 
 var hasOwn = Object.prototype.hasOwnProperty;
@@ -28,17 +28,6 @@ args.forEach(function(arg) {
   }
 });
 
-/*
-../../../support/prim.js
-prim-to-promise.js
-../../../lifecycle.js
-../../../support/normalize-alias.js
-../../../support/normalize-dot.js
-../../../support/plugins.js
-fetch.js
-requirejs-to-amodro.js
-suffix.js
- */
 
 // Permutations of the builds
 var permutations = {
@@ -54,8 +43,8 @@ var permutations = {
   // For browser with promise support, no requirejs compatibility, only script
   // tag and worker support.
   'amodro': {
-    '../../../support/prim.js': '',
-    'prim-to-promise.js': '',
+    'support/prim.js': '',
+    'support/prim-to-promise.js': '',
     'fetch.js': 'fetch/browser-script-worker.js',
     'requirejs-require-adapter.js': '',
     'requirejs-to-amodro.js': '',
@@ -66,8 +55,8 @@ var permutations = {
   // tag and worker support. With debug logging.
   'amodro-debug': {
     keepLog: true,
-    '../../../support/prim.js': '',
-    'prim-to-promise.js': '',
+    'support/prim.js': '',
+    'support/prim-to-promise.js': '',
     'fetch.js': 'fetch/browser-script-worker.js',
     'requirejs-require-adapter.js': '',
     'requirejs-to-amodro.js': '',
@@ -76,16 +65,16 @@ var permutations = {
 
   // Base amodro, with some requirejs api support, using native promises.
   'amodro-requirejs': {
-    '../../../support/prim.js': '',
-    'prim-to-promise.js': '',
+    'support/prim.js': '',
+    'support/prim-to-promise.js': '',
     'fetch.js': 'fetch/browser-script-worker.js',
     'suffix.js': 'suffix/requirejs-to-amodro.js'
   },
   // Same as aboev, but with debug logs
   'amodro-requirejs-debug': {
     keepLog: true,
-    '../../../support/prim.js': '',
-    'prim-to-promise.js': '',
+    'support/prim.js': '',
+    'support/prim-to-promise.js': '',
     'fetch.js': 'fetch/browser-script-worker.js',
     'suffix.js': 'suffix/requirejs-to-amodro.js'
   },
@@ -132,6 +121,6 @@ Object.keys(permutations).forEach(function(key) {
   });
 
   // Write the file.
-  var outPath = path.join(__dirname, key + '.js');
+  var outPath = path.join(__dirname, '..', key + '.js');
   fs.writeFileSync(outPath, contents, 'utf8');
 });
