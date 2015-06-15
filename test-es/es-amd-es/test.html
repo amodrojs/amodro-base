@@ -1,0 +1,28 @@
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Mocha Tests</title>
+  <link rel="stylesheet" href="../../node_modules/mocha/mocha.css" />
+</head>
+<body>
+  <div id="mocha"></div>
+  <!-- <script src="expect.js"></script> -->
+  <script src="../../node_modules/mocha/mocha.js"></script>
+  <script src="../chai.js"></script>
+  <script>mocha.setup('bdd'); var assert = chai.assert;</script>
+
+  <script src="../../amodro-es.js"></script>
+
+  <script>
+  amodro(['a'], function(a) {
+    it('es-amd-es', function(done) {
+      assert.equal(a.default.name, 'a');
+      assert.equal(a.default.b.name, 'b');
+      assert.equal(a.default.b.c.name, 'c');
+      done();
+    });
+    mocha.run();
+  });
+  </script>
+</body>
+</html>

@@ -40,9 +40,7 @@ var amodro, define;
   function makeRequire(instance, refId) {
     function require(deps, callback, errback) {
       // If waiting inline definitions, claim them for this instance.
-      if (defineQueue.length) {
-        instance.execCompleted();
-      }
+      instance.execCompleted();
 
       if (typeof deps === 'string') {
         var normalizedDepId = instance.top.normalize(deps, refId);
@@ -55,9 +53,8 @@ var amodro, define;
       // be absorbed that that require loader.
       var p = Promise.resolve()
       .then(function() {
-        if (defineQueue.length) {
-          instance.execCompleted();
-        }
+        // If waiting inline definitions, claim them for this instance.
+        instance.execCompleted();
 
         return Promise.all(deps.map(function(dep) {
           // If a require([]) call asks for require, just give back this
@@ -312,11 +309,36 @@ var amodro, define;
           }.bind(this)
         });
       } else {
-        return this.getModule(dep, throwOnMiss);
+        var depModule = this.getModule(dep, throwOnMiss);
+        // es asks for amd: { default: }
+        // es asks for es, no conversion
+        // amd asks for es, no conversion
+        // amd asks for amd, no conversion
+        if ((normalizedId && hasProp(this.esType, normalizedId)) &&
+            !hasProp(this.esType, dep)) {
+          return {
+            default: depModule
+          };
+        } else {
+          return depModule;
+        }
       }
     },
 
     execCompleted: function(normalizedId) {
+      if (defineEsQueue.length) {
+        var esQueue = defineEsQueue;
+        defineEsQueue = [];
+
+        esQueue.forEach(function(esId) {
+          this.esType[esId] = true;
+        }.bind(this));
+      }
+
+      if (!defineQueue.length) {
+        return;
+      }
+
       var queue = defineQueue,
           anon = [],
           foundId = !normalizedId;
@@ -536,6 +558,10 @@ var amodro, define;
     // cases.
     this.isScriptLocation = {};
 
+    // Tracks if the module was translated from ES module syntax. In those
+    // cases the export structure may need to be adjusted.
+    this.esType = {};
+
     // Stores promises for fetches already in progress, keyed by location.
     this.fetchedLocations = {};
 
@@ -551,9 +577,15 @@ var amodro, define;
   // Set up define() infrastructure. It just holds on to define calls until a
   // loader instance claims them via execCompleted.
   if (typeof define === 'undefined') {
-    var defineQueue = [];
+    var defineQueue = [],
+        defineEsQueue = [];
     define = function() {
       defineQueue.push(slice.call(arguments));
+    };
+    define.es = function() {
+      for (var i = 0; i < arguments.length; i++) {
+        defineEsQueue.push(arguments[i]);
+      }
     };
     define.amd = {
       jQuery: true
