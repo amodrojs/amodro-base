@@ -61,9 +61,7 @@ var permutations = {
     'requirejs-to-amodro.js': '',
     'suffix.js': ''
   },
-
-  // For browser with promise support, no requirejs compatibility, only script
-  // tag and worker support. With debug logging.
+  // Same as aboev, but with debug logs
   'amodro-debug': {
     keepLog: true,
     'support/prim.js': '',
@@ -71,7 +69,25 @@ var permutations = {
     'fetch.js': 'fetch/browser-script-worker.js',
     'requirejs-require-adapter.js': '',
     'requirejs-to-amodro.js': '',
-    'suffix.js': ''
+    'suffix.js': '',
+  },
+
+  // For browser with promise support, no requirejs compatibility, only script
+  // tag and worker support.
+  'amodro-es': {
+    'support/prim.js': '',
+    'support/prim-to-promise.js': '',
+    'fetch.js': 'fetch/browser-script-worker.js',
+    'requirejs-require-adapter.js': '',
+    'requirejs-to-amodro.js': '',
+    'suffix.js': '',
+    'translate.js': [
+      'translate/esm-pre.js',
+      'translate/esprima.js',
+      'translate/esm-amd.js',
+      'translate/esm-post.js',
+      'translate/esm-define.js'
+    ]
   },
 
   // Base amodro, with some requirejs api support, using native promises.
