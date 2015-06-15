@@ -1,6 +1,6 @@
 /*jshint strict: false */
-/*global llProtoModifiers, amodro */
-llProtoModifiers.push(function (proto) {
+/*global protoModifiers, amodro */
+protoModifiers.push(function (proto) {
   proto.amodroFetch = function(normalizedId, refId, location) {
     var jsSuffixRegExp = /\.js$/;
 
@@ -8,7 +8,7 @@ llProtoModifiers.push(function (proto) {
       require('fs').readFile(location, 'utf8', function(err, text) {
         // If a JS script, simulate browser evaluation on script load, where
         // the text is not visible to the loader.
-        if (jsSuffixRegExp.test(location)) {
+        if (this.useScript(normalizedId, refId, location)) {
           amodro.evaluate(text);
           this.execCompleted(normalizedId);
           text = '';
@@ -17,7 +17,6 @@ llProtoModifiers.push(function (proto) {
         if (err) {
           reject(err);
         } else {
-          // Do not return the text as it has already been handled.
           resolve(text);
         }
       }.bind(this));

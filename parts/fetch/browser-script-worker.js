@@ -1,13 +1,9 @@
 /*jshint strict: false, browser: true */
-/*global llProtoModifiers, importScripts, hasProp */
-llProtoModifiers.push(function (proto) {
+/*global protoModifiers, importScripts, hasProp */
+protoModifiers.push(function (proto) {
 
   proto.createXhr = function(normalizedId, location, responseType) {
     return new XMLHttpRequest();
-  };
-
-  proto.useScript = function(normalizedId, refId, location) {
-    return hasProp(this.isScriptLocation, location);
   };
 
   proto.xhrFetch = function(normalizedId, refId, location, responseType) {

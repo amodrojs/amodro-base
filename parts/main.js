@@ -227,6 +227,13 @@ var amodro, define;
       }
     },
 
+    // Used to determine if script tags (or simulation of that in node) should
+    // be used for a given ID. If not, then something like XHR is used and the
+    // source of the fetch goes on to translate.
+    useScript: function(normalizedId, refId, location) {
+      return hasProp(this.isScriptLocation, location);
+    },
+
     translate: function(normalizedId, location, source) {
       // sync
       return source;
@@ -475,6 +482,10 @@ var amodro, define;
   // Mix in other modifiers, like plugin support. Do this AFTER setting up
   // baseline lifecycle methods, these modifieres will want to delegate to those
   // captured methods after detecting if plugins should be used.
+  //INSERT fetch.js
+  // Put translate *after* fetch here to allow translators that always want
+  // xhr loading to override useScript.
+  //INSERT translate.js
   protoModifiers.forEach(function(modify) {
     modify(lcProto);
   });
@@ -536,14 +547,6 @@ var amodro, define;
   }
 
   LoaderLifecyle.prototype = lcProto;
-
-  // Allow other modifications to the LoaderLifecycle prototype based on build
-  // and environment needs.
-  var llProtoModifiers = [];
-  //INSERT fetch.js
-  llProtoModifiers.forEach(function(modify) {
-    modify(LoaderLifecyle.prototype);
-  });
 
   // Set up define() infrastructure. It just holds on to define calls until a
   // loader instance claims them via execCompleted.

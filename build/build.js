@@ -1,3 +1,4 @@
+/*jshint node: true */
 'use strict';
 var fs = require('fs'),
     path = require('path'),
@@ -34,10 +35,20 @@ var permutations = {
   // The default one used for running node tests by default.
   'amodro-node': {
   },
-
-  // The default one used for running node tests by default, with debug logging.
+  // The default one with debug logging.
   'amodro-node-debug': {
     keepLog: true
+  },
+
+  // The default one used for running node tests by default.
+  'amodro-es-node': {
+    'translate.js': [
+      'translate/esm-pre.js',
+      'translate/esprima.js',
+      'translate/esm-amd.js',
+      'translate/esm-post.js',
+      'translate/esm-define.js'
+    ]
   },
 
   // For browser with promise support, no requirejs compatibility, only script
@@ -115,8 +126,20 @@ Object.keys(permutations).forEach(function(key) {
       }
     }
 
-    var filePath = path.join(dir, fileName);
-    var text = transform(filePath, fs.readFileSync(filePath, 'utf8'));
+    if (!Array.isArray(fileName)) {
+      fileName = [fileName];
+    }
+
+    var text = '';
+    fileName.forEach(function(fileName) {
+      var filePath = path.join(dir, fileName);
+      // Path may not exist for cases where the expectatation is a mapping
+      // *must* be provided.
+      if (fs.existsSync(filePath)) {
+        text += transform(filePath, fs.readFileSync(filePath, 'utf8'));
+      }
+    });
+
     return text;
   });
 
