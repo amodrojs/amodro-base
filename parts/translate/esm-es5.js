@@ -5,7 +5,7 @@
     } else if (typeof exports === 'object') {
         module.exports = factory(require('esprima'));
     } else {
-        root.esmAmd = factory(root.esprima);
+        root.esmEs5 = factory(root.esprima);
     }
 }(this, function (esprima) {
  'use strict';
@@ -133,7 +133,7 @@
     return translation;
   }
 
-  function esmAmd(source, options) {
+  function esmEs5(source, options) {
     options = options || {};
     var simulateCycle = !!options.simulateCycle;
 
@@ -199,5 +199,5 @@
     };
   }
 
-  return esmAmd;
+  return esmEs5;
 }));

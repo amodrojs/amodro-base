@@ -6,7 +6,7 @@ protoModifiers.push(function (proto) {
   var oldTranslate = proto.translate;
   proto.translate = function(normalizedId, location, source) {
     var result = source,
-        esmResult = esmTranslator.esmAmd(source);
+        esmResult = esmTranslator.esmEs5(source);
 
     if (esmResult.translated) {
       result = 'define(function(require, exports, module) { ' +

@@ -45,7 +45,7 @@ var permutations = {
     'translate.js': [
       'translate/esm-pre.js',
       'translate/esprima.js',
-      'translate/esm-amd.js',
+      'translate/esm-es5.js',
       'translate/esm-post.js',
       'translate/esm-define.js'
     ]
@@ -84,7 +84,7 @@ var permutations = {
     'translate.js': [
       'translate/esm-pre.js',
       'translate/esprima.js',
-      'translate/esm-amd.js',
+      'translate/esm-es5.js',
       'translate/esm-post.js',
       'translate/esm-define.js'
     ]
