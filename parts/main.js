@@ -316,12 +316,22 @@ var amodro, define;
         // amd asks for amd, no conversion
         if ((normalizedId && hasProp(this.esType, normalizedId)) &&
             !hasProp(this.esType, dep)) {
-          return {
-            default: depModule
-          };
+          return this.getEs5AdaptedExports(dep, depModule);
         } else {
           return depModule;
         }
+      }
+    },
+
+    // Cache the adapted result in case multiple ES6 modules ask for the same
+    // ES5 module, want them to all have === tests if they compare.
+    getEs5AdaptedExports: function(normalizedId, depModule) {
+      if (hasProp(this.es5AdaptedExports, normalizedId)) {
+        return this.es5AdaptedExports[normalizedId];
+      } else {
+        return (this.es5AdaptedExports[normalizedId] = {
+          default: depModule
+        });
       }
     },
 
@@ -561,6 +571,7 @@ var amodro, define;
     // Tracks if the module was translated from ES module syntax. In those
     // cases the export structure may need to be adjusted.
     this.esType = {};
+    this.es5AdaptedExports = {};
 
     // Stores promises for fetches already in progress, keyed by location.
     this.fetchedLocations = {};
