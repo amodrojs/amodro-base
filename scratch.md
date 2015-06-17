@@ -2,6 +2,9 @@
 
 ## plugins:
 
+* should locate try to split off the extension in the locateDetectExtension
+  case? Thinking not, see es-node-adapt test case, text-depend
+
 * test loading a plugin that had a depending on the module wanting to use it in a dependency.
 * alias config of 'c' asking for 'a' aliased to 'plugin!', but 'c' having a cycle with 'plugin!'.
 * test text!something.js loading of the text, not executing it.
