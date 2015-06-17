@@ -72,6 +72,14 @@ var permutations = {
     'suffix.js': '',
   },
 
+  // Same as amodro, but with a promise shim.
+  'amodro-prim': {
+    'fetch.js': 'fetch/browser-script-worker.js',
+    'requirejs-require-adapter.js': '',
+    'requirejs-to-amodro.js': '',
+    'suffix.js': ''
+  },
+
   // For browser with promise support, no requirejs compatibility, only script
   // tag and worker support.
   'amodro-es': {
