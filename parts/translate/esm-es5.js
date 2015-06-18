@@ -224,8 +224,7 @@
     return {
       translated: true,
       depIds: depIds,
-      //source: 'define(function(require, exports, module) { ' + source + ' });'
-      source: source
+      source: '\'use strict\'; ' + source
     };
   }
 

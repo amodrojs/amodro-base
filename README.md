@@ -6,7 +6,7 @@ The goals of this project:
 
 * Prove out amodro-lifecycle as a reusable module loader core. See [amodrojs/node-es-adapt](https://github.com/amodrojs/node-es-adapt) for a different wrapping of amodro-lifecycle, focused on node and traditional node module interop with ES2015 modules.
 * Provide a future looking AMD loader, with a more customized base that allows bridging more module formats during this transition period. Could be useful for transpiled code that want to use AMD as the module runtime substrate.
-* A requirejs successor, with a more modern underpinning and the ability to break some compatibility in the interests of better APIs, particularly around loader plugins.
+* A requirejs successor, with a more modern underpinning and the ability to break some compatibility in the interests of better APIs, particularly around loader plugins and disallowing URLs as module IDs.
 
 ## Documentation
 
