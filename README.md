@@ -1,6 +1,6 @@
 # amodro-base
 
-Wraps amodro-lifecycle with a baseline AMD loader implementation. Optional extensions to the baseline are supported too.
+Wraps [amodro-lifecycle](https://github.com/amodrojs/amodro-lifecycle) with a baseline AMD loader implementation. Optional extensions to the baseline are supported too.
 
 The goals of this project:
 
@@ -17,7 +17,7 @@ The goals of this project:
 ## Loader variants
 
 * amodro: AMD loader, workers in browser documents and workers. Only works in browsers with native Promise support. Uses browser script tags for JS scripts, XHR calls for loader plugin fetches.
-* amodro-prim: Same as `amodro` but includes a promise shim. The shim is only activated at runtime if the browser does not natively support Promises.
+* amodro-prim: Same as amodro but includes a promise shim. The shim is only activated at runtime if the browser does not natively support Promises.
 * amodro-es: Like amodro, but always uses XHR and eval instead of script tags so that it can translate ES2015 module syntax into AMD module syntax. Requires native promise support in the browser. Allows trying out ES2015 module syntax without needing to do builds. ES module translation limited to what [esm-es5](https://github.com/jrburke/esm-es5) can do.
 * amodro-requirejs: amodro, with a compatibility layer for requirejs users. Requires browsers with native Promise support.
 * amodro-requirejs-prim: amodro-requirejs, but with a Promise shim that is only activated at runtime if the browser does not natively support Promises.
