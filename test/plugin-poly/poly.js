@@ -11,11 +11,6 @@ define(['module'], function(module) {
   };
 
   return {
-    depend: function(loader, normalizedId, deps) {
-      // async. deps are not normalized yet.
-      return Promise.resolve(deps);
-    },
-
     fetch: function (loader, resourceId, refId, location) {
       var testEntry = testIds[resourceId];
       if (testEntry.test()) {
