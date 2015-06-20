@@ -247,7 +247,8 @@ protoModifiers.push(function (proto) {
     makeProxyMethod(proxy, 'useUnnormalized', instance);
     makeProxyMethod(proxy, 'use', instance);
     makeProxyMethod(proxy, 'setModule', instance);
-    makeProxyMethod(proxy, 'evaluate', instance);
+    makeProxyMethod(proxy, 'parse', instance);
+    makeProxyMethod(proxy, 'getData', instance);
 
     return proxy;
   }

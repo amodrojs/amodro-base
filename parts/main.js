@@ -249,10 +249,10 @@ var amodro, define;
       return Promise.resolve(deps);
     },
 
-    evaluate: function(normalizedId, location, source) {
+    parse: function(normalizedId, location, source) {
       var result = amodro.evaluate(source);
 
-      // If evaluate is being called, then it means there was source input.
+      // If parse is being called, then it means there was source input.
       // Need to call execComplete to bring in any define()'d modules into the
       // loader.
       this.execCompleted(normalizedId);
