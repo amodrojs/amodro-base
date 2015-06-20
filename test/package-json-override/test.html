@@ -1,0 +1,93 @@
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Mocha Tests</title>
+  <link rel="stylesheet" href="../../node_modules/mocha/mocha.css" />
+</head>
+<body>
+  <div id="mocha"></div>
+  <!-- <script src="expect.js"></script> -->
+  <script src="../../node_modules/mocha/mocha.js"></script>
+  <script src="../chai.js"></script>
+  <script>mocha.setup('bdd'); var assert = chai.assert;</script>
+
+  <script src="../../amodro.js"></script>
+
+  <script>
+  /*global amodro, describe, it, mocha */
+  amodro.config({
+    baseUrl: 'node_modules'
+  });
+
+  // Apply the overrides
+  var proto = amodro.Lifecycle.prototype;
+
+  // The goal of this override it to consult a package.json for a package, and
+  // make sure the main ID is used correctly. This approach inserts a module
+  // definition for the pkgName that just has a dependency on pkgName/main,
+  // which restricts the overrides to just this depend function. However, if
+  // overriding normalize to convert pkgName to pkgName/main that should work
+  // too, since by the time normalize() is called, the package.json info will
+  // be known.
+  proto.depend = function(normalizedId, deps) {
+    var pkgFetches = [];
+
+    deps.forEach(function(depId) {
+      if (depId.indexOf('.') === 0) {
+        // Skip relative IDs, assume node convention of relative means no
+        // node_modules use.
+        return;
+      }
+
+      var pkgName = depId.split('/')[0];
+
+      // module already in the system. Could still be in the registry awaiting
+      // final instantiation, but no further work to do here.
+      if (this.containsModule(pkgName)) {
+        return;
+      }
+
+      var data = this.getData(pkgName);
+      if (!data.fetchingPkg) {
+        // Using a shortcut method to do the XHR work, but substitute a more
+        // targeted fetching, handle errors perhaps more too.
+        data.fetchingPkg = this.xhrFetch(pkgName, null,
+                                this.locate(pkgName + '/' + 'package', 'json'),
+                                'json')
+        .then(function(pkgJson) {
+          var mainId = pkgJson.main.replace(/\.js/, '') || 'index';
+          if (mainId.indexOf('./') === 0) {
+            mainId = mainId.substring(2);
+          }
+          this.addToRegistry(pkgName, [pkgName + '/' + mainId],
+                             function(main) { return main; });
+          delete data.fetchingPkg;
+        }.bind(this));
+
+      }
+
+      pkgFetches.push(data.fetchingPkg);
+    }.bind(this));
+
+    if (pkgFetches.length) {
+      return Promise.all(pkgFetches).then(function() {
+        return deps;
+      });
+    } else {
+      return deps;
+    }
+  };
+
+  amodro(['foo', 'bar/baz'], function(foo, baz) {
+    describe('package-json-override', function() {
+      it('foo baz', function() {
+        assert.equal('foo', foo.name);
+        assert.equal('baz', baz.name);
+        assert.equal('bar-index', baz.index.name);
+      });
+    });
+    mocha.run();
+  });
+  </script>
+</body>
+</html>

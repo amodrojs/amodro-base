@@ -635,6 +635,9 @@ var amodro, define;
     amodro = createLoader();
     amodro.createLoader = createLoader;
 
+    // Expose Lifecycle so that its prototype can be altered.
+    amodro.Lifecycle = Lifecycle;
+
     // Finds require(StringLiteral) calls in a function.
     amodro.parseCjsFunction = function(fn) {
       var deps = [];
